@@ -1,9 +1,15 @@
 document.getElementById('split').addEventListener('click', () => {
-    chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-      const currentUrl = tabs[0].url;
+    chrome.tabs.query({currentWindow: true}, (tabs) => {
       const screenWidth = screen.availWidth;
       const screenHeight = screen.availHeight;
-  
+
+      const currentIndex = tabs.findIndex(tab => tab.active);
+      if (currentIndex < 0) return;  
+      const currentUrl = tabs[currentIndex].url;
+
+      const rightUrl = tabs[currentIndex + 1]?.url || 'https://www.google.com';
+
+
       chrome.windows.create({
         url: currentUrl,
         left: 0,
@@ -12,11 +18,7 @@ document.getElementById('split').addEventListener('click', () => {
         height: screenHeight,
         type: "normal"
       });
-  
-      const currentIndex = tabs.findIndex(tab => tab.active);
-      const rightTab = tabs[currentIndex + 1];
-      const rightUrl = rightTab ? rightTab: "https://www.google.com";
-  
+
       chrome.windows.create({
         url: rightUrl,
         left: Math.floor(screenWidth / 2),
@@ -25,5 +27,6 @@ document.getElementById('split').addEventListener('click', () => {
         height: screenHeight,
         type: "normal"
       });
+
     });
   });

@@ -3,7 +3,7 @@
     "name": "Split Screen Tabs",
     "version": "1.0",
     "description": "Split current tab and another into two windows side-by-side.",
-    "permissions": ["tabs", "windows"],
+    "permissions": ["tabs", "tabs", "windows"],
     "action": {
       "default_popup": "popup.html",
       "default_icon": "icons/icon.png"
